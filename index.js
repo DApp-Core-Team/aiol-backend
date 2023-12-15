@@ -11,7 +11,7 @@ app.set("view engine", 'ejs');
 app.use(cors());
 
 app.use((req, res, next) => {
-    const allowedOrigins = ['https://aiol-app.vercel.app', 'http://localhost:9200'];
+    const allowedOrigins = ['https://aiol-app.vercel.app', 'https://app.aiol.live', 'http://localhost:9200'];
     const origin = req.headers.origin;
     if (allowedOrigins.includes(origin)) {
         res.setHeader('Access-Control-Allow-Origin', origin);
