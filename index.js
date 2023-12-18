@@ -63,7 +63,7 @@ app.post('/api/search', (req, res) => {
         });
 });
 
-app.post('/api/search-llm', (req, res) => {
+app.post('/api/web-llm', (req, res) => {
     const { query, num_web_results, offset, country, safesearch } = req.body;
     if (!query) return res.status(400).send({ message: "Invalid request!" });
 
@@ -74,7 +74,7 @@ app.post('/api/search-llm', (req, res) => {
     if (country) params = `${params}&country=${country}`;
     if (safesearch) params = `${params}&safesearch=${safesearch}`;
 
-    const options = { method: 'GET', headers: { 'X-API-Key': process.env.API_KEY } };
+    const options = { method: 'GET', headers: { 'X-API-Key': process.env.LLM_API_KEY } };
 
     fetch(`https://api.ydc-index.io/rag?${params}`, options)
         .then(response => response.json())
