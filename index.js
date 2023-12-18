@@ -63,5 +63,29 @@ app.post('/api/search', (req, res) => {
         });
 });
 
+app.post('/api/search-llm', (req, res) => {
+    const { query, num_web_results, offset, country, safesearch } = req.body;
+    if (!query) return res.status(400).send({ message: "Invalid request!" });
+
+    let params = `query=${query}`;
+    if (num_web_results) params = `${params}&num_web_results=${num_web_results}`;
+    if (offset) params = `${params}&offset=${offset}`;
+    if (offset) params = `${params}&offset=${offset}`;
+    if (country) params = `${params}&country=${country}`;
+    if (safesearch) params = `${params}&safesearch=${safesearch}`;
+
+    const options = { method: 'GET', headers: { 'X-API-Key': process.env.API_KEY } };
+
+    fetch(`https://api.ydc-index.io/rag?${params}`, options)
+        .then(response => response.json())
+        .then(response => {
+            res.send(response);
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).send({ message: err });
+        });
+});
+
 //port
 app.listen(80, console.log("Listening at port 80..."))
